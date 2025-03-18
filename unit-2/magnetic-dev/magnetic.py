@@ -76,31 +76,49 @@ class MagneticField2D:
        """
        # Call the grid information
        x_2d, y_2d = self.grid_generator()
-
+       
        # Call the field generators
-       bx_2d, by_2d = self.uniform_bfield(x_2d, y_2d)
+       if field_type == "uniform":
+           # Call the uniform field generator
+           bx_2d, by_2d = self.uniform_bfield(x_2d, y_2d)
+       elif field_type == "dipolar":
+           # Call the dipolar field generator
+           bx_2d, by_2d = self.dipolar_bfield(x_2d, y_2d)
+       else:
+           raise ValueError("The argument field_type only accepts: 'uniform' or 'dipolar'.")
+
+       # Compute B
+       b_mod = np.sqrt(bx_2d**2 +by_2d**2)
 
        # Create a figure environment
        plt.figure(figsize = (8,8))
+       # Reference for streamplot: https://scipython.com/blog/visualizing-the-earths-magnetic-field/
+       plt.streamplot(x_2d, y_2d, bx_2d, by_2d, color = np.log10(b_mod), linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
+       #plt.quiver(x_2d, y_2d, bx_2d, by_2d, np.log10(b_mod))
 
-       plt.quiver(x_2d, y_2d, bx_2d, by_2d)
-
-       plt.savefig("uniform.png")
+       plt.savefig(field_type+".png")
     
 
 # Call the class
 if __name__ == "__main__":
 
+    # Parsing the code
+    parser = argparse.ArgumentParser(description = "Generate and make a map of 2D B fields")
+    # Add argument
+    parser.add_argument("--btype", choices = ["uniform", "dipolar"], required = True, help = "Type of B field.")
+    args = parser.parse_args()
+
     # Instance of the class
     mag = MagneticField2D()
     
     # Access methods
-    xx, yy = mag.grid_generator()
+    #xx, yy = mag.grid_generator()
     
     # Testing
-    b_r, b_theta = mag.dipolar_bfield(xx, yy)
+    #b_r, b_theta = mag.dipolar_bfield(xx, yy)
 
-    print("We should see the shapes: ", b_r.shape)
+    #print("We should see the shapes: ", b_r.shape)
 
     # Plot the uniform field
-    mag.plot_2dfield(field_type = "uniform")
+    mag.plot_2dfield(field_type = args.btype)
+    #mag.plot_2dfield(field_type = "dipolar")
