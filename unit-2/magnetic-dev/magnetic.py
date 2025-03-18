@@ -30,7 +30,8 @@ class MagneticField2D:
        x_2d, y_2d = np.meshgrid(x, y)
        # Return
        return x_2d, y_2d
-
+   
+   # Second method: static method for the uniform field
    @staticmethod 
    def uniform_bfield(x_2d, y_2d):
        """
@@ -39,6 +40,53 @@ class MagneticField2D:
        bx_2d = np.full_like(x_2d, 1.)
        by_2d = np.full_like(y_2d, 1.)
        return bx_2d, by_2d
+   
+   @staticmethod 
+   def dipolar_bfield(x_2d, y_2d):
+       """
+       """
+       # Constants
+       b0 = 1.e-5
+       R  = 5.
+       
+       # Radial coordinate
+       r = np.sqrt(x_2d**2 +y_2d**2)
+
+       # Define
+       theta = np.arctan2(y_2d, x_2d)
+
+       # Field components in spherical coordinates
+       b_r     = -2.*b0*(R/r**3)*np.cos(theta)
+       b_theta = -b0*(R/r**3)*np.sin(theta) 
+      
+       # Conversion to Cartesian coordinates
+       bx_2d = -b_theta*np.sin(theta) + b_r*np.cos(theta)
+       by_2d = b_theta*np.cos(theta) + b_r*np.sin(theta)
+
+       # temporary check
+       #return b_r, b_theta 
+       return bx_2d, by_2d   
+
+   # Dipolar field
+  
+   # Plotting method
+   def plot_2dfield(self, field_type = "uniform"):
+
+       """
+       """
+       # Call the grid information
+       x_2d, y_2d = self.grid_generator()
+
+       # Call the field generators
+       bx_2d, by_2d = self.uniform_bfield(x_2d, y_2d)
+
+       # Create a figure environment
+       plt.figure(figsize = (8,8))
+
+       plt.quiver(x_2d, y_2d, bx_2d, by_2d)
+
+       plt.savefig("uniform.png")
+    
 
 # Call the class
 if __name__ == "__main__":
@@ -48,4 +96,11 @@ if __name__ == "__main__":
     
     # Access methods
     xx, yy = mag.grid_generator()
-    print("We should see the x shapes: ", xx.shape) 
+    
+    # Testing
+    b_r, b_theta = mag.dipolar_bfield(xx, yy)
+
+    print("We should see the shapes: ", b_r.shape)
+
+    # Plot the uniform field
+    mag.plot_2dfield(field_type = "uniform")
