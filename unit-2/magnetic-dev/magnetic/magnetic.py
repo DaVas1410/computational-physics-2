@@ -1,19 +1,18 @@
 # Import modules
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
-import argparse
 
 # Create main class
-
-
 class MagneticField2D:
     """
-    TBA
+    Main class.
     """
 
     # Init function -> Grid information
     def __init__(self, x_l=-10., x_r=+10, y_l=-10, y_r=+10, n=50):
         """
+        This function inialised the grid parameters.
         """
         self.x_l = x_l
         self.x_r = x_r
@@ -24,6 +23,9 @@ class MagneticField2D:
     # First method for grid generation
     def grid_generator(self):
         """
+        This function is used for grid generation.
+        Input: instance self
+        Output: x_2d, y_2d (2D matrices with the coordiantes.)
         """
         # 1D vectors
         x = np.linspace(self.x_l, self.x_r, self.n)
@@ -37,6 +39,9 @@ class MagneticField2D:
     @staticmethod
     def uniform_bfield(x_2d, y_2d):
         """
+        This function returns a 2D B dipolar field from input coordinates.
+        Inputs: x_2d, y_2d -> 2D coordinate matrices
+        Output: bx_2d, by_2d -> 2D components
         """
         # FField components
         bx_2d = np.full_like(x_2d, 1.)
@@ -47,10 +52,13 @@ class MagneticField2D:
     @staticmethod
     def dipolar_bfield(x_2d, y_2d):
         """
+        This function returns a 2D B uniform field from input coordinates.
+        Inputs: x_2d, y_2d -> 2D coordinate matrices
+        Output: bx_2d, by_2d -> 2D components
         """
         # Constants
         b0 = 1.e-5
-        R = 5.
+        r_fix = 5.
 
         # Radial coordinate
         r = np.sqrt(x_2d**2 + y_2d**2)
@@ -59,8 +67,8 @@ class MagneticField2D:
         theta = np.arctan2(y_2d, x_2d)
 
         # Field components in spherical coordinates
-        b_r = -2.*b0*(R/r**3)*np.cos(theta)
-        b_theta = -b0*(R/r**3)*np.sin(theta)
+        b_r = -2.*b0*(r_fix/r**3)*np.cos(theta)
+        b_theta = -b0*(r_fix/r**3)*np.sin(theta)
 
         # Conversion to Cartesian coordinates
         bx_2d = -b_theta*np.sin(theta) + b_r*np.cos(theta)
@@ -74,6 +82,7 @@ class MagneticField2D:
 
     def plot_2dfield(self, field_type="uniform"):
         """
+        Plotting method.
         """
         # Call the grid information
         x_2d, y_2d = self.grid_generator()
@@ -94,7 +103,7 @@ class MagneticField2D:
 
         # Create a figure environment
         plt.figure(figsize=(8, 8))
-        # Reference for streamplot: https://scipython.com/blog/visualizing-the-earths-magnetic-field/
+        # Ref. streamplot: https://scipython.com/blog/visualizing-the-earths-magnetic-field/
         plt.streamplot(x_2d, y_2d, bx_2d, by_2d, color=np.log10(
             b_mod), linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
         # plt.quiver(x_2d, y_2d, bx_2d, by_2d, np.log10(b_mod))
