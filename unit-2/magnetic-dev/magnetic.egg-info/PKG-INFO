@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.2
 Name: magnetic
 Version: 0.0.0
 Summary: 2D B vector field generator
@@ -7,3 +7,8 @@ Author-email: wbanda@yachaytech.edu.ec
 License: GNU
 Requires-Dist: numpy
 Requires-Dist: matplotlib
+Dynamic: author
+Dynamic: author-email
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: summary
