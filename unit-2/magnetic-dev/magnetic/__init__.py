@@ -1,1 +1,1 @@
-__all__ = ["MagneticField2D"]
+__all__ = ["magnetic"]
