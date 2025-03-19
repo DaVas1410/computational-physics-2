@@ -1,13 +1,15 @@
 # README for MagneticFieldGenerator
 
-## Usage from the command line
-'''Python
+## Usage from the command line:
+```python
 python magnetic.py --btype "uniform"
-'''
+```
 
 ## Author/s:
 WEBB
-JDVV
 
-## Date Created
-18/03/2025
+## Date Created:
+28/03/2025
+
+## Licence:
+GNU, MIT, BSD

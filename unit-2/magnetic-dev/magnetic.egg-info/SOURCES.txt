@@ -1,0 +1,9 @@
+README.md
+setup.py
+magnetic/__init__.py
+magnetic/magnetic.py
+magnetic.egg-info/PKG-INFO
+magnetic.egg-info/SOURCES.txt
+magnetic.egg-info/dependency_links.txt
+magnetic.egg-info/requires.txt
+magnetic.egg-info/top_level.txt
