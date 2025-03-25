@@ -1,6 +1,5 @@
 # Import modules
 import argparse
-import pytest
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,14 +14,11 @@ class MagneticField2D:
         """
         This function inialised the grid parameters.
         """
-        self._x_l = x_l
-        self._x_r = x_r
-        self._y_l = y_l
-        self._y_r = y_r
-        # Check for valid/invalid inputs
-        if not isinstance(n, int):
-            raise TypeError("Please input an integer value.")
-        self._n = n
+        self.x_l = x_l
+        self.x_r = x_r
+        self.y_l = y_l
+        self.y_r = y_r
+        self.n = n
 
     # First method for grid generation
     def grid_generator(self):
@@ -113,28 +109,6 @@ class MagneticField2D:
         # plt.quiver(x_2d, y_2d, bx_2d, by_2d, np.log10(b_mod))
 
         plt.savefig(field_type+".png")
-
-
-# Option 1: Within the same script
-# Test class
-
-class TestMagneticField2D:
-
-    # Setup method
-    @classmethod
-    def setup_class(cls):
-        cls.mag = MagneticField2D(x_l=-20., x_r=+20, y_l=-20, y_r=+20, n=500)
-
-    @classmethod
-    def teardown_class(cls):
-        del cls.mag
-
-    # Test method 1
-    def test_ics_n(self):
-        with pytest.raises(TypeError):
-            MagneticField2D(n = "b")
-
-
 
 
 # Call the class
