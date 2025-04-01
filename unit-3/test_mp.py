@@ -50,13 +50,6 @@ t_parallel_n04 = np.array([parallel(int(n), 4) for n in n_run])
 t_parallel_n08 = np.array([parallel(int(n), 8) for n in n_run])
 t_parallel_n16 = np.array([parallel(int(n), 16) for n in n_run])
 
-# Create a data
-with open("serial.csv", "w") as f:
-    f.write(f"{n_run},{t_serial}\n")
-
-with open("parallel.csv", "w") as f:
-    f.write(f"{n_run},{t_parallel}\n")
-
 # PLotting
 plt.figure(figsize = (9, 5))
 
