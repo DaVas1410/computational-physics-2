@@ -78,7 +78,7 @@ plt.savefig("test_jl.png")
 plt.close()
 
 # Saving execution data in a CSV file
-with open("execution_times.csv", "w", newline="") as csvfile:
+with open("test_jl.csv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
     # Header row
     writer.writerow(["n_run", "serial", "parallel_2", "parallel_4", "parallel_8", "parallel_16"])
