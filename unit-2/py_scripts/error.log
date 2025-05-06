@@ -1,0 +1,91 @@
+Last login: Thu Mar  6 23:02:38 2025 from 190.103.191.1
+Bienvenido al HPC de CEDIA
+
+La arquitectura actual es de un nodo de autenticación y dos nodos de computo  de altas prestaciones con un total de 512 cores, 2TB RAM, 128TB de almacenamiento, con una capacidad de 10Pflops en AI.
+
+Este nodo actual (login)  es exclusivamente para enviar tareas a nodos de computo, no para realizar trabajos en el mismo.
+
+El solicitar recursos y usarlos es muy simple:
+
+
+1) solicitar recursos:
+
+
+salloc -p PARTITION -n 1 -c #CPUs  --mem=#RAMGB --gres=gpu:GPUTypeConsole:#GPUs --time=hh:mm:ss
+
+
+PARTITION
+cpu-dev:   16 CPU cores máximo, 32 GB RAM máximo, tiempo de reserva 120 horas máximo. 
+cpu: 	   64 CPU cores máximo, 128 GB RAM máximo, tiempo de reserva 48 horas máximo. 
+cpu-max:   128 CPU cores máximo, 256 GB RAM máximo, tiempo de reserva 24 horas máximo. 
+gpu-dev:   16 CPU cores máximo, 32 GB RAM máximo, 1 GPU máximo, tiempo de reserva 96 horas máximo.
+gpu:       64 CPU cores máximo, 128 GB RAM máximo, 2 GPUs máximo, tiempo de reserva 48 horas máximo.
+gpu-max:   128 CPU cores máximo, 256 GB RAM máximo, 4 GPUs máximo, tiempo de reserva 24 horas máximo.
+
+
+GPUTypeconsole
+a100_1g.5gb :    cada GPU tiene 5 GB
+a100_2g.10gb :   cada GPU tiene 10 GB
+a100_3g.20gb :   cada GPU tiene 20 GB
+a100-sxm4-40gb:  cada GPU tiene 40 GB
+
+
+Por ejemplo para solicitar 5G de ram, 16 cores, 1 gpu de 10 GB y 1 hora de reserva, ejecutar el siguiente comando:
+
+salloc -p gpu -n 1 -c 16  --mem=5G --gres=gpu:a100_2g.10gb:1 --time=01:00:00
+
+
+2) Una vez ejecutado la reserva esta realizada, y lo único que debe usar es conectarse al nodo donde esta reservado los recursos. Ejemplo:
+
+ssh dgx-node-0-0
+
+3) ya puede usar la capacidad reservada en el nodo.
+----------------------------- acceso root --------------------------------------------
+Si desea acceso root, deberá utilizar enroot (docker) para crear tener su propia distribución.
+
+Pasos:
+
+1) enroot import docker://nvcr.io#nvidia/cuda
+2)  enroot create --name micudapersonal nvidia+cuda.sqsh
+3)  enroot list
+4)  enroot start --root --rw micudapersonal
+
+Con estos pasos tendrá un docker personal con acceso root donde puede instalar lo que necesite, si desea otra distribución, puede encontrarlo en https://catalog.ngc.nvidia.com y cambiar en el paso 1 nvidia/cuda por la distribución que desea.
+
+----------------- acceso web (jupyter o Rstudio ) o acceso gráfico------------------
+Si nunca ha usado acceso web, debe ingresar a https://hpc.cedia.edu.ec y click en "Forgot Password?" , y colocar el username (no la cuenta de email). Le llegará un correo con un enlace para colocar una nueva clave, la cual puede usar para ingresar en el sito y en el menu "interactive Apps" solicitar:
+
+a) Un escritorio (NVidia DeepOps Desktop)
+b) Rstudio
+c) VisualStudio Code
+d) Jupyter (pytorch, tensorflow, rapidsai)
+
+colocar el numero de horas que va a usarlo, y recursos solicitados (cores/memoria/gpu)
+
+---------------------------------------------------------------------------------------
+RECUERDE: Este cluster es compartido entre varios investigadores, solicite los recursos que realmente va a utilizar, y asi mismo solamente el tiempo requerido, ya que alguien más querrá usarlo.
+
+Siempre nos encontramos monitoreando, y un uso incorrecto o uso excesivo de recursos podrá ser motivo para un bloqueo de su cuenta.
+---------------------------------------------------------------------------------
+
+mayor información: noc@cedia.org.ec 
+whatsapp: +593 9 5886 4416
+horario atención: Lun - Dom 7h00 - 23h00
+
+
+[?1034h(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ c^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ ^C
+(py37) [wladimir.banda@login1 ~]$ 
