@@ -56,7 +56,7 @@ This is an advanced course on object-oriented programming for physics. It is the
 
 ### 5. Special topics in computational physics:
 
-- Applications to electromagnetism, heat flow, and quantum mechanics
+- Applications to fluids, electromagnetism, heat flow, and quantum mechanics
 
 - Thermodynamic simulations and introduction to molecular dynamics
 
